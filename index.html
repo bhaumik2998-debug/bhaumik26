@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+html, body {
+margin: 0;
+padding: 0;
+width: 100%;
+height: 100%;
+}
+
+body {
+background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+font-family: Arial, sans-serif;
+font-size: 20px;
+overflow: hidden;
+}
+
+/* Floating hearts */
+.heart {
+position: fixed;
+bottom: -20px;
+font-size: 22px;
+animation: floatUp 8s linear infinite;
+opacity: 0.7;
+pointer-events: none;
+}
+
+@keyframes floatUp {
+from { transform: translateY(0) scale(1); opacity: 0.9; }
+to { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+}
+
+/* Full screen card */
+.card {
+width: 100%;
+height: 100%;
+padding: 40px 24px;
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+animation: gentleZoom 4s ease-in-out infinite;
+}
+
+@keyframes gentleZoom {
+0% { transform: scale(1); }
+50% { transform: scale(1.03); }
+100% { transform: scale(1); }
+}
+
+h1 {
+color: #e91e63;
+font-size: 36px;
+margin-bottom: 16px;
+}
+
+p {
+font-size: 22px;
+}
+
+/* Buttons */
+.buttons {
+position: relative;
+margin-top: 40px;
+width: 100%;
+height: 180px;
+}
+
+button {
+padding: 18px 36px;
+font-size: 22px;
+border: none;
+border-radius: 40px;
+cursor: pointer;
+}
+
+#yes {
+background: #e91e63;
+color: white;
+}
+
+#no {
+background: #eee;
+position: absolute;
+top: 90px;
+left: 50%;
+transform: translateX(-50%);
+}
+
+/* NO message */
+#noMsg {
+margin-top: 36px;
+font-size: 22px;
+font-weight: 700;
+color: #111;
+min-height: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Instrumental music -->
+<audio id="loveMusic" preload="auto">
+<source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moment-491.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+<h1>Hey Cutie</h1>
+<p>Will you be my Valentine? 🥰</p>
+
+<div class="buttons">
+<button id="yes" onclick="yesClicked()">Yes 💖</button>
+<button id="no" onclick="moveNo()">No 🙈</button>
+</div>
+
+<p id="noMsg"></p>
+</div>
+
+<script>
+/* Floating hearts background */
+setInterval(() => {
+const heart = document.createElement("div");
+heart.className = "heart";
+heart.innerText = "💕";
+heart.style.left = Math.random() * 100 + "vw";
+heart.style.animationDuration = (6 + Math.random() * 4) + "s";
+document.body.appendChild(heart);
+setTimeout(() => heart.remove(), 10000);
+}, 900);
+
+/* NO button logic */
+function moveNo() {
+const btn = document.getElementById("no");
+const msg = document.getElementById("noMsg");
+
+const messages = [
+"Wait...are you sure 🥹",
+"Not happening 😌",
+"No escape😤",
+"You can't escape love",
+"Still No..really🙄",
+"You are testing my patience",
+"Try again 🙈",
+"Nope,not happening"
+
+];
+
+btn.style.transform =
+`translate(${Math.random()*260-130}px, ${Math.random()*120-60}px)`;
+
+msg.innerText = messages[Math.floor(Math.random() * messages.length)];
+
+if (navigator.vibrate) navigator.vibrate(150);
+}
+
+/* YES clicked */
+function yesClicked() {
+const music = document.getElementById("loveMusic");
+music.currentTime = 0;
+music.play(); // must be inside click
+
+document.getElementById("card").style.animation = "none";
+
+document.body.innerHTML = `
+<div style="
+width:100%;
+height:100%;
+background:#ffeef5;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:24px;
+box-sizing:border-box;
+text-align:center;">
+
+<h1 style="color:#e91e63; font-size:30px; margin-bottom:8px;">
+❤️ Yayyy🥳🥳 🎉 ❤️
+</h1>
+
+<p style="font-size:36px; font-weight:400; margin-bottom:6px;">
+I knew you would say yes ! 💕
+</p>
+
+<p style="font-size:32px; font-weight:300; margin-bottom:18px;">
+You have made me the happiest! 💖
+</p>
+
+<img
+src="proposal.jpg"
+alt="Proposal moment"
+style="
+max-width:65%;
+max-height:45vh;
+border-radius:22px;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
+"
+/>
+</div>
+`;
+}
+</script>
+
+</body>
+</html>
